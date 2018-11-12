@@ -3,16 +3,21 @@ package com.danielwalkerapp.kotlinmessenger
 import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat.startActivityForResult
+import android.support.v4.content.ContextCompat.startActivity
 import android.util.Log
 import android.widget.Toast
+import com.danielwalkerapp.kotlinmessenger.R.id.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,21 +46,23 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    var selectedPhotoUri: Uri? = null
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null){
-            Log.d("MainActivity",  "Photo was selected")
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            Log.d("RegisterActivity", "Photo was selected")
 
-            val uri = data.data
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+            selectedPhotoUri = data.data
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
             val bitmapDrawable = BitmapDrawable(bitmap)
             register_photo_btn.setBackgroundDrawable(bitmapDrawable)
         }
     }
 
-    private fun perfromRegistration(){
+    private fun perfromRegistration() {
         val name = editnametext_register.text.toString()
         val email = editemailtext_register.text.toString()
         val password = editpasswordtext_register.text.toString()
@@ -75,13 +82,27 @@ class RegisterActivity : AppCompatActivity() {
 
                     //else if the creation was successful
                     Log.d("RegisterActivity", "Successfully created user with UID: ${it.result!!.user.uid} ")
+
+                    uploadImageToFirebaseStorage()
                 }
                 .addOnFailureListener {
                     Log.d("RegisterActivity", "Failed to create user: ${it.message}")
                     Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_LONG).show()
                 }
-        }
     }
 
 
+    private fun uploadImageToFirebaseStorage() {
+        if(selectedPhotoUri == null) return
 
+        val filename = UUID.randomUUID().toString()
+        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+
+        ref.putFile(selectedPhotoUri!!)
+                .addOnSuccessListener {
+                    Log.d("RegisterActivity", "Successfully uploaded image  {${it.metadata?.path}")
+                }
+    }
+
+
+}
