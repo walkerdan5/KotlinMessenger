@@ -1,14 +1,17 @@
 package com.danielwalkerapp.kotlinmessenger
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
 
 
@@ -20,13 +23,35 @@ class MainActivity : AppCompatActivity() {
             perfromRegistration()
         }
 
+        register_photo_btn.setOnClickListener {
+            Log.d("RegisterActivity", "Try to show photo selector ")
+
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, 0)
+        }
+
 
         haveAccount_text_register.setOnClickListener {
-            Log.d("MainActivity", "Try to show login activity")
+            Log.d("RegisterActivity", "Try to show login activity")
 
             //launch the login activity somehow
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null){
+            Log.d("MainActivity",  "Photo was selected")
+
+            val uri = data.data
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+
+            val bitmapDrawable = BitmapDrawable(bitmap)
+            register_photo_btn.setBackgroundDrawable(bitmapDrawable)
         }
     }
 
@@ -39,9 +64,9 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Please enter an email and password", Toast.LENGTH_SHORT).show()
             return
         }
-        Log.d("MainActivity", "name is: " + name)
-        Log.d("MainActivity", "email is: " + email)
-        Log.d("MainActivity", "password is:  $password")
+        Log.d("RegisterActivity", "name is: " + name)
+        Log.d("RegisterActivity", "email is: " + email)
+        Log.d("RegisterActivity", "password is:  $password")
 
         //FireBase Authentication using Kotlin implementation
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
@@ -49,10 +74,10 @@ class MainActivity : AppCompatActivity() {
                     if (!it.isSuccessful) return@addOnCompleteListener
 
                     //else if the creation was successful
-                    Log.d("MainActivity", "Successfully created user with UID: ${it.result!!.user.uid} ")
+                    Log.d("RegisterActivity", "Successfully created user with UID: ${it.result!!.user.uid} ")
                 }
                 .addOnFailureListener {
-                    Log.d("MainActivity", "Failed to create user: ${it.message}")
+                    Log.d("RegisterActivity", "Failed to create user: ${it.message}")
                     Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_LONG).show()
                 }
         }
