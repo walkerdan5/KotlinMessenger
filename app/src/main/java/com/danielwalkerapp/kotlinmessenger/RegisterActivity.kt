@@ -7,15 +7,12 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.v4.app.ActivityCompat.startActivityForResult
-import android.support.v4.content.ContextCompat.startActivity
 import android.util.Log
 import android.widget.Toast
-import com.danielwalkerapp.kotlinmessenger.R.id.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -23,13 +20,13 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_register)
 
         register_button_register.setOnClickListener {
             perfromRegistration()
         }
 
-        register_photo_btn.setOnClickListener {
+        selectphoto_button_register.setOnClickListener {
             Log.d("RegisterActivity", "Try to show photo selector ")
 
             val intent = Intent(Intent.ACTION_PICK)
@@ -58,8 +55,10 @@ class RegisterActivity : AppCompatActivity() {
             selectedPhotoUri = data.data
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
-            val bitmapDrawable = BitmapDrawable(bitmap)
-            register_photo_btn.setBackgroundDrawable(bitmapDrawable)
+            photo_imageview_register.setImageBitmap(bitmap)
+            selectphoto_button_register.alpha = 0f
+//            val bitmapDrawable = BitmapDrawable(bitmap)
+//            selectphoto_button_register.setBackgroundDrawable(bitmapDrawable)
         }
     }
 
