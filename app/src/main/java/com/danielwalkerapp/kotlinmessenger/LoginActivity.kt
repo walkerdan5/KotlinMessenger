@@ -1,5 +1,6 @@
 package com.danielwalkerapp.kotlinmessenger
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -27,6 +28,9 @@ class LoginActivity: AppCompatActivity() {
                         if(!it.isSuccessful) return@addOnCompleteListener
 
                         Log.d("Login", "Login successful with email/pass")
+                        val intent = Intent(this, LatestMessagesActivity::class.java)
+                        intent.flags= Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
                     }
                     .addOnFailureListener {
                         Log.d("Login", "Login failed ${it.message}")

@@ -125,6 +125,7 @@ class RegisterActivity : AppCompatActivity() {
                     Log.d("RegisterActivity", "Saved user to Realtime Database")
 
                     val intent = Intent(this, LatestMessagesActivity::class.java)
+                    //flag will stop the user from returning to the register page after registering
                     intent.flags= Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
 
