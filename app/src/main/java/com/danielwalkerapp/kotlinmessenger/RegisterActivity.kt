@@ -13,6 +13,7 @@ import android.util.Log
 import android.widget.Toast
 import com.danielwalkerapp.kotlinmessenger.R.id.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -101,8 +102,31 @@ class RegisterActivity : AppCompatActivity() {
         ref.putFile(selectedPhotoUri!!)
                 .addOnSuccessListener {
                     Log.d("RegisterActivity", "Successfully uploaded image  {${it.metadata?.path}")
+
+                    ref.downloadUrl.addOnSuccessListener {
+                        it.toString()
+                        Log.d("RegisterActivity", "File Location:  $it")
+
+                        saveUserToDatabase(it.toString())
+                    }
+                }
+                .addOnFailureListener {
+                    Log.d("RegisterActivity", "Failed to upload image to Firebase")
+                }
+    }
+
+    private fun saveUserToDatabase(profileImageUrl: String){
+        val uid = FirebaseAuth.getInstance().uid ?:""
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        val user = User(editnametext_register.text.toString(), profileImageUrl, uid)
+
+        ref.setValue(user)
+                .addOnSuccessListener {
+                    Log.d("RegisterActivity", "Saved user to Realtime Database")
                 }
     }
 
 
 }
+
+class User(val username: String, val profileImageUrl: String, val uid: String)
