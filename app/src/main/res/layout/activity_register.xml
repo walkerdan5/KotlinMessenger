@@ -104,25 +104,28 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/round_photo_button"
         android:text="Add Photo"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/photo_imageview_register"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        app:civ_border_color="@android:color/white"
-        app:civ_border_width="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/selectphoto_button_register"
-        app:layout_constraintEnd_toEndOf="@+id/selectphoto_button_register"
-        app:layout_constraintStart_toStartOf="@+id/selectphoto_button_register"
-        app:layout_constraintTop_toTopOf="@+id/selectphoto_button_register" />
+    <de.hdodenhof.circleimageview.CircleImageView android:id="@+id/photo_imageview_register"
+                                                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                  android:layout_width="125dp"
+                                                  android:layout_height="125dp"
+                                                  app:civ_border_color="@android:color/white"
+                                                  app:civ_border_width="4dp"
+                                                  app:layout_constraintBottom_toBottomOf="@+id/selectphoto_button_register"
+                                                  app:layout_constraintEnd_toEndOf="@+id/selectphoto_button_register"
+                                                  app:layout_constraintHorizontal_bias="0.0"
+                                                  app:layout_constraintStart_toStartOf="@+id/selectphoto_button_register"
+                                                  app:layout_constraintTop_toTopOf="@+id/selectphoto_button_register"
+                                                  app:layout_constraintVertical_bias="1.0"/>
 
 </android.support.constraint.ConstraintLayout>
