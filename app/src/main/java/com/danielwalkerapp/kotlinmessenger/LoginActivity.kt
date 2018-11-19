@@ -15,6 +15,12 @@ class LoginActivity: AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         performLogin()
+
+        haveAccount_text_login.setOnClickListener {
+            //launch the register activity
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun performLogin(){
