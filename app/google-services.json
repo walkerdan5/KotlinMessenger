@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "373746233697",
+    "firebase_url": "https://kotlinmessenger-c1973.firebaseio.com",
+    "project_id": "kotlinmessenger-c1973",
+    "storage_bucket": "kotlinmessenger-c1973.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373746233697:android:775cb0841d50e38e",
+        "android_client_info": {
+          "package_name": "com.danielwalkerapp.kotlinmessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373746233697-599lani9rmlfl1vsqfrd3q9jbef6fgrs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1pAriVapAbo3bhxC-5YjldlRc_cxqLXA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
